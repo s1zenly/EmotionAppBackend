@@ -4,6 +4,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from api.api_models import Emotion
+from api.api_models import Quote
+from quote_client import QuoteClient
 import database.db_client as db_client
 
 from database.db_config import init_db
@@ -26,6 +28,10 @@ app.add_middleware(
 @app.get("/api/health")
 async def health_check():
     return {"status": "ok"}
+
+@app.get("/api/quote")
+async def fetch_quote():
+    return Quote.model_validate(QuoteClient().get_quote()).model_dump()
 
 @app.post("/api/emotion/add")
 async def save_emotion(emotion: Emotion):

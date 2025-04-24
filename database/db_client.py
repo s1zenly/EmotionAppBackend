@@ -1,4 +1,4 @@
-from sqlalchemy import select, delete, func, insert
+from sqlalchemy import select, insert
 
 
 from database.db_models import User, EmotionHistory, EmotionType
