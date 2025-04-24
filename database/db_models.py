@@ -2,6 +2,8 @@ from sqlalchemy.ext.asyncio import AsyncAttrs
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped
 from sqlalchemy import BigInteger, DateTime, ForeignKey
 
+
+
 class Base(AsyncAttrs, DeclarativeBase):
     pass
 
@@ -13,11 +15,18 @@ class User(Base):
 
 
 class EmotionHistory(Base):
-    __tablename__ = 'emotion_history'
+    __tablename__ = 'user_emotions'
 
     id: Mapped[int] = mapped_column(primary_key=True)
     emotion_category: Mapped[str] = mapped_column(nullable=False)
-    emotion_type: Mapped[str] = mapped_column(nullable=False)
+    emotion_types_key: Mapped[str] = mapped_column(nullable=False)
     create_date: Mapped[DateTime] = mapped_column(DateTime, nullable=False)
 
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id', ondelete='CASCADE'))
+
+class EmotionType(Base):
+    __tablename__ = "emotion_types"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    uuid: Mapped[str] = mapped_column(nullable=False)
+    emotion_type: Mapped[str] = mapped_column(nullable=False)
